@@ -14,14 +14,5 @@
 
 <style lang="scss" scoped>
     @import '../assets/sass/_variables.scss';
-    .breadcrumb-container p {
-        margin: 0;
-    }
-
-    .breadcrumb-position {
-        font-weight: 800;
-        color: white;
-        background-color: $blue;
-        padding: 0.25em;
-    }
+    
 </style>

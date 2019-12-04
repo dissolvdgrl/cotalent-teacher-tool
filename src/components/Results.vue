@@ -1,6 +1,8 @@
 <template>
     <div id="results">
-        <breadcrumb></breadcrumb>
+        <div id="breadcrumb-container">
+            <p>You are here: <span class="breadcrumb-position">{{ position }}</span></p>
+        </div>
         <div class="warning">
             <img src="src/assets/img/warning-icon.svg" alt="">
             <p>Your results are not stored online, please print or download them to your computer before closing this window.</p>
@@ -19,7 +21,7 @@
         <div class="divider yellow"></div>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
         <div id="chart-output">
-            <p>chart output goes here</p>
+            <p>RESULTS WILL BE SHOWN HERE, this is just a testing environment</p>
         </div>
         <div id="table">
             <div class="table-heading">
@@ -62,12 +64,10 @@
 </template>
 
 <script>
-    import breadcrumb from './Breadcrumb.vue';
     export default {
         data() {
             return { position: 'step 3' };
         },
-        components: { breadcrumb },
         methods: {
             printResults() {
                 window.print();

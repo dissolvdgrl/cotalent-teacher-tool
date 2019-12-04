@@ -1,6 +1,8 @@
 <template>
     <div id="start-container">
-        <breadcrumb></breadcrumb>
+        <div id="breadcrumb-container">
+            <p>You are here: <span class="breadcrumb-position">{{ position }}</span></p>
+        </div>
         <h1>Welcome to the Characteristics Tool</h1>
         <div class="divider yellow"></div>
         <p>As a teacher it helps to know your teacher characteristics so you can make use of them while working with students and helping them to develop their talents. In order to recognize their talents, it helps to know what your personal talents are. You will easier spot talented students who share your talents than students who have talents different from your own. The Teacher Characteristic Tool will let you discover the characteristics that come to you naturally and those that you might further develop. </p>
@@ -53,12 +55,10 @@
 </template>
 
 <script>
-import breadcrumb from './Breadcrumb.vue';
 export default {
     data() {
         return { position: 'start' }
-    },
-    components: { breadcrumb }
+    }
 }
 </script>
 

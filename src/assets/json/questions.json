@@ -1,22 +1,198 @@
 [
     {
         "id": 1,
-        "question": "Question goes here"
+        "question": "Offering possibilities to create individual assignments"
     },
     {
         "id": 2,
-        "question": "Question goes here"
+        "question": "Offering possibilities to explore individual ideas"
     },
     {
         "id": 3,
-        "question": "Question goes here"
+        "question": "Stimulating students to think about their future"
     },
     {
         "id": 4,
-        "question": "Question goes here"
+        "question": "Giving space for personal perspectives"
     },
     {
         "id": 5,
-        "question": "Question goes here"
+        "question": "Dealing with differentiation in the classroom"
+    },
+    {
+        "id": 6,
+        "question": "Addressing students as an individual"
+    },
+    {
+        "id": 7,
+        "question": "Allowing students to experiment"
+    },
+    {
+        "id": 8,
+        "question": "Giving students freedom in time management"
+    },
+    {
+        "id": 9,
+        "question": "Granting students a lot of responsibility"
+    },
+    {
+        "id": 10,
+        "question": "Stimulating students to take responsibility for their own development"
+    },
+    {
+        "id": 11,
+        "question": "Allowing alternative paths to meet course requirements"
+    },
+    {
+        "id": 12,
+        "question": "Giving open assignments"
+    },
+    {
+        "id": 13,
+        "question": "Setting challengeing tasks and assignments"
+    },
+    {
+        "id": 14,
+        "question": "Using real life, multidisciplinary assignments"
+    },
+    {
+        "id": 15,
+        "question": "Teaching students how they can apply knowledge in real situations"
+    },
+    {
+        "id": 16,
+        "question": "Having a coaching attitude"
+    },
+    {
+        "id": 17,
+        "question": "Holding back when students make mistakes in order to facilitate learning"
+    },
+    {
+        "id": 18,
+        "question": "Encouraging and coaching self-reflection"
+    },
+    {
+        "id": 19,
+        "question": "Coaching students in learning from mistakes"
+    },
+    {
+        "id": 20,
+        "question": "Giving students constructive suggestions and leaving it up to the students to use them"
+    },
+    {
+        "id": 21,
+        "question": "Sharing personal experiences"
+    },
+    {
+        "id": 22,
+        "question": "Being responsive to unexpected questions students might have"
+    },
+    {
+        "id": 23,
+        "question": "Taking time to talk with students outside classroom situations"
+    },
+    {
+        "id": 24,
+        "question": "Using humour"
+    },
+    {
+        "id": 25,
+        "question": "Creating a supportive, friendly atmosphere"
+    },
+    {
+        "id": 26,
+        "question": "Creating an atmosphere in which students learn from each other"
+    },
+    {
+        "id": 27,
+        "question": "Expressing high expectations of students"
+    },
+    {
+        "id": 28,
+        "question": "Encouraging students to show what they've learned"
+    },
+    {
+        "id": 29,
+        "question": "Using different education methods"
+    },
+    {
+        "id": 30,
+        "question": "Experimenting with innovative education methods"
+    },
+    {
+        "id": 31,
+        "question": "Using active teaching and learning methods"
+    },
+    {
+        "id": 32,
+        "question": "Responding to classroom situations while staying focused on the learning goals"
+    },
+    {
+        "id": 33,
+        "question": "Involving students in planning courses or sessions"
+    },
+    {
+        "id": 34,
+        "question": "Getting into dialogue with students"
+    },
+    {
+        "id": 35,
+        "question": "Using examples/knowledge suggested by students to explain new concepts"
+    },
+    {
+        "id": 36,
+        "question": "Encouraging students to participate actively in class"
+    },
+    {
+        "id": 37,
+        "question": "Leaving room for discussion during classes"
+    },
+    {
+        "id": 38,
+        "question": "Appreciating students' questions and remarks"
+    },
+    {
+        "id": 39,
+        "question": "Challenging students to be critical of requests from partners involved"
+    },
+    {
+        "id": 40,
+        "question": "Placing different points of view opposite each other"
+    },
+    {
+        "id": 41,
+        "question": "Involving students in research"
+    },
+    {
+        "id": 42,
+        "question": "Stimulating students in research"
+    },
+    {
+        "id": 43,
+        "question": "Giving students feedback as if they are a junior colleague"
+    },
+    {
+        "id": 44,
+        "question": "Stimulating students to play an active role in the academic community"
+    },
+    {
+        "id": 45,
+        "question": "Stimulating students to play an active role in society"
+    },
+    {
+        "id": 46,
+        "question": "Referring students to experts when their questions or interests are beyond the teacher's area of expertise"
+    },
+    {
+        "id": 47,
+        "question": "Involving people from outside the programme in classes"
+    },
+    {
+        "id": 48,
+        "question": "Involving colleagues from other disciplines"
+    },
+    {
+        "id": 49,
+        "question": "Including other disciplines in classes"
     }
 ]

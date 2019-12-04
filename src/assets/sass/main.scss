@@ -45,6 +45,7 @@
           transition: 0.25s all ease;
           font-size: 1.25em;
           font-weight: 800;
+          border: none;
         }
 
         .btn:hover, .btn:focus {
@@ -130,6 +131,17 @@
 
         .heading-underline {
           text-decoration-line: underline;
-          //text-decoration-thickness: 5px;
+          text-decoration-thickness: 5px;
           text-decoration-color: $blue;
+        }
+
+        .breadcrumb-container p {
+          margin: 0;
+        }
+  
+        .breadcrumb-position {
+            font-weight: 800;
+            color: white;
+            background-color: $blue;
+            padding: 0.25em;
         }

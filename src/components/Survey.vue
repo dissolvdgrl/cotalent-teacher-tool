@@ -1,6 +1,8 @@
 <template>
     <div id="survey">
-        <breadcrumb></breadcrumb>
+        <div id="breadcrumb-container">
+            <p>You are here: <span class="breadcrumb-position">{{ position }}</span></p>
+        </div>
         <h1>Teacher Talent Tool: <span class="heading-underline">Questions</span></h1>
         <div class="divider yellow"></div>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
@@ -21,17 +23,18 @@
                 </div>
             </div>
             <div class="form-group" v-for="question in questions" :key="question.id">
-                <p><span id="question-1-id">{{ question.id }}.</span> {{ question.question }}</p>
+                <span class="question-id">{{ question.id }}.</span> 
+                <p>{{ question.question }}</p>
                 <div class="input-wrapper">
-                    <input type="radio" v-bind:name="question.id" v-bind:id="question.id" class="checkmark-custom">
+                    <input type="radio" v-bind:name="question.id" v-bind:id="question.id" class="checkmark-custom" v-bind:value="0" v-model="question.score">
                     <label v-bind:for="question.id" class="checkmark-custom-label"></label>
                 </div>
                 <div class="input-wrapper">
-                    <input type="radio" v-bind:name="question.id" v-bind:id="question.id" class="checkmark-custom">
+                    <input type="radio" v-bind:name="question.id" v-bind:id="question.id" class="checkmark-custom"  v-bind:value="0" v-model="question.score">
                     <label v-bind:for="question.id" class="checkmark-custom-label"></label>
                 </div>
                 <div class="input-wrapper">
-                    <input type="radio" v-bind:name="question.id" v-bind:id="question.id" class="checkmark-custom">
+                    <input type="radio" v-bind:name="question.id" v-bind:id="question.id" class="checkmark-custom"  v-bind:value="1" v-model="question.score">
                     <label v-bind:for="question.id" class="checkmark-custom-label"></label>
                 </div>
             </div>
@@ -39,7 +42,7 @@
     <div class="page-end-container">
         <div class="left-border yellow"></div>
         <div class="next">
-            <router-link to="/results" class="btn go-next" >Next</router-link>
+            <button class="btn go-next" @click.prevent="onSubmit">Next</button>
         </div>
         <div class="right-border yellow"></div>
     </div>
@@ -47,13 +50,31 @@
 </template>
 
 <script>
-    import breadcrumb from './Breadcrumb.vue';
     import questions from '../assets/json/questions.json';
     export default {
         data() {
-            return { position: 'step 2', questions: questions };
+            return { 
+                position: 'step 2', 
+                questions: questions,
+                score: ''
+                }
         },
-        components: { breadcrumb }
+
+        methods: {
+            onSubmit() {
+                let scores = [];
+                let inputs = document.querySelectorAll('.checkmark-custom');
+                for(let i = 0; i < inputs.length; i++) {
+                    if(inputs[i].checked) {
+                        scores.push(inputs[i].value);
+                        console.log(scores);
+                        //console.log(`Question ${inputs[i].name} - Checked, has a value of ${inputs[i].value}`);
+                    }
+                }
+                alert('submitting...');
+                this.$router.push("/results");
+            }
+        }
     }
 </script>
 
@@ -61,11 +82,13 @@
         @import '../assets/sass/_variables.scss';
         .form-group {
             display: flex;
-            padding-left: 1em;
+            padding: 1em 0 1em 1em;
     
             p {
                 width: 55%;
                 padding-right: 1em;
+                margin: 0;
+                line-height: 1em;
             }
     
             .input-wrapper {
@@ -73,6 +96,7 @@
                 width: 15%;
                 align-items: center;
                 justify-content: center;
+                position: relative;
             }
         }
 
@@ -84,6 +108,9 @@
             display: flex;
             background-color: $yellow;
             padding: 0 1em;
+            position: sticky; 
+            top: 0;
+            z-index: 2;
     
             p {
                 color: $gray;
@@ -118,10 +145,11 @@
         /* Checkmark */
         .checkmark-custom {
             opacity: 0;
-            width: 20px;
-            height: 20px;
+            width: 35px;
+            height: 35px;
             z-index: 2;
             position: absolute;
+            margin: 0;
         }
     
         .checkmark-custom-label {
@@ -152,6 +180,13 @@
             background: $blue;
             color: white;
             border: 2px solid $blue;
+        }
+
+        .question-id {
+          height: 100%;
+          display: inline-block;
+          margin-right: 1em;
+          font-size: 1em;
         }
         
 </style>
