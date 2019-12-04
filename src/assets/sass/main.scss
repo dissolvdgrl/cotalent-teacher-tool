@@ -1,0 +1,135 @@
+@import '_variables';
+// BODY & RESETS
+
+      html {
+        background: url('/src/assets/img/paper.jpg') repeat-y 100%;
+        width: 100%;
+        height: auto;
+      }
+
+      body {
+        margin: 0;
+        padding: 10%;
+      }
+
+      p {
+        font-size: 20px;
+      }
+
+// COLOURS
+
+      .yellow {
+        background-color: $yellow;
+      }
+
+      .blue {
+        background-color: $blue;
+      }   
+
+// MAIN
+
+      #app {
+          font-family: 'Open Sans', sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          color: #2c3e50;
+          margin-top: 60px;
+        }
+
+        .btn {
+          background-color: $blue;
+          box-shadow: $shadowOne;
+          color: white;
+          padding: 0.25em 0.65em 0.5em;
+          text-decoration: none;
+          transition: 0.25s all ease;
+          font-size: 1.25em;
+          font-weight: 800;
+        }
+
+        .btn:hover, .btn:focus {
+          box-shadow: none;
+          padding: 0.5em 0.85em 0.75em;
+          cursor: pointer;
+          letter-spacing: 0.05em;
+        }
+
+        .next {
+          z-index: 2;
+        }
+
+        .go-next::after {
+          content: '\2192';
+          margin-left: 0.5em;
+          overflow: hidden;
+        }
+
+        .go-next:active::after {
+          transform: translateX(10px);
+        }
+
+        h1 {
+          font-size: 3em;
+          text-transform: capitalize;
+        }
+
+        .divider {
+          width: 100px;
+          height: 4px;
+          margin-bottom: 3em;
+        }
+
+        .yellow-txt {
+          color: $yellow;
+        }
+
+        .page-end-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 3em;
+        }
+
+        .left-border, .right-border {
+          width: 45%;
+          height: 2px;
+          z-index: 1;
+        }
+
+        ol {
+          counter-reset: item;
+          
+          li:before {
+            font-weight: 800;
+            font-size: 2em;
+            content: counter(item) ".";
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+
+          li {
+            list-style-type: none;
+            counter-increment: item;
+          }
+        }
+
+        li {
+          position: relative; 
+          margin-bottom: 2em;         
+        }
+
+        li p { 
+          display: inline-block;
+          width: 80%;
+          margin-left: 10%;
+          margin-top: 0; 
+          line-height: 1.5em; 
+        }
+
+        .heading-underline {
+          text-decoration-line: underline;
+          //text-decoration-thickness: 5px;
+          text-decoration-color: $blue;
+        }
