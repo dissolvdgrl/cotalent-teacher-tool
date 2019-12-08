@@ -21,7 +21,7 @@
         <div class="divider yellow"></div>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
         <div id="chart-output">
-            <p>RESULTS WILL BE SHOWN HERE, this is just a testing environment</p>
+            <p v-for="inner_item in inner">{{ inner_item }}</p>
         </div>
         <div id="table">
             <div class="table-heading">
@@ -54,7 +54,7 @@
                     <img src="src/assets/img/print-icon.svg" alt="">
                 </span>
                 <img src="src/assets/img/line.svg" alt="">
-                <span @click="savePdf">
+                <span @click="showData">
                     <img src="src/assets/img/pdf-icon.svg" alt="">
                 </span>
             </div>
@@ -66,7 +66,11 @@
 <script>
     export default {
         data() {
-            return { position: 'step 3' };
+            return { 
+                position: 'step 3',
+                inner: this.scores_a,
+                outer: this.scores_b
+            };
         },
         methods: {
             printResults() {
@@ -75,6 +79,11 @@
 
             savePdf() {
                 alert('Todo: save as pdf functionality');
+            },
+
+            showData() {
+                console.log(`the results for inner circle are: ${this.scores_a}`);
+                console.log(`the results for outer circle are: ${this.scores_b}`);
             }
         }
     }

@@ -66,6 +66,7 @@ export default {
     @import '../assets/sass/_variables.scss';
     #start-container {
         position: relative;
+        width: 100%;
     }
 
     .how-to-use-container {

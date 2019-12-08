@@ -19,22 +19,27 @@
                     <p>Sometimes</p>
                 </div>
                 <div class="cell">
-                    <p>All the time</p>
+                    <p>Regularly</p>
                 </div>
             </div>
             <div class="form-group" v-for="question in questions" :key="question.id">
                 <span class="question-id">{{ question.id }}.</span> 
                 <p>{{ question.question }}</p>
                 <div class="input-wrapper">
-                    <input type="radio" v-bind:name="question.id" v-bind:id="question.id" class="checkmark-custom" v-bind:value="0" v-model="question.score">
+                    <input type="radio" 
+                        v-bind:name="question.id" 
+                        class="checkmark-custom" 
+                        value="a" 
+                        v-model="question.score"
+                    >
                     <label v-bind:for="question.id" class="checkmark-custom-label"></label>
                 </div>
                 <div class="input-wrapper">
-                    <input type="radio" v-bind:name="question.id" v-bind:id="question.id" class="checkmark-custom"  v-bind:value="0" v-model="question.score">
+                    <input type="radio" v-bind:name="question.id" class="checkmark-custom"  value="b" v-model="question.score">
                     <label v-bind:for="question.id" class="checkmark-custom-label"></label>
                 </div>
                 <div class="input-wrapper">
-                    <input type="radio" v-bind:name="question.id" v-bind:id="question.id" class="checkmark-custom"  v-bind:value="1" v-model="question.score">
+                    <input type="radio" v-bind:name="question.id" class="checkmark-custom"  value="c" v-model="question.score">
                     <label v-bind:for="question.id" class="checkmark-custom-label"></label>
                 </div>
             </div>
@@ -62,15 +67,17 @@
 
         methods: {
             onSubmit() {
-                let scores = [];
                 let inputs = document.querySelectorAll('.checkmark-custom');
                 for(let i = 0; i < inputs.length; i++) {
                     if(inputs[i].checked) {
-                        scores.push(inputs[i].value);
-                        console.log(scores);
+                        this.scores_a.push(inputs[i].value);
+                        this.scores_b.push(inputs[i].value);
                         //console.log(`Question ${inputs[i].name} - Checked, has a value of ${inputs[i].value}`);
                     }
                 }
+
+                console.log(this.scores_a);
+                console.log(this.scores_b);
                 alert('submitting...');
                 this.$router.push("/results");
             }

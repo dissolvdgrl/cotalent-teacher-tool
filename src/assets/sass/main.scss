@@ -1,6 +1,10 @@
 @import '_variables';
 // BODY & RESETS
 
+      * {
+        box-sizing: border-box;
+      }
+
       html {
         background: url('/src/assets/img/paper.jpg') repeat-y 100%;
         width: 100%;
@@ -10,6 +14,8 @@
       body {
         margin: 0;
         padding: 10%;
+        font-size: 20px;
+        width: 100%;
       }
 
       p {
@@ -34,6 +40,7 @@
           -moz-osx-font-smoothing: grayscale;
           color: #2c3e50;
           margin-top: 60px;
+          width: 100%;
         }
 
         .btn {
@@ -43,9 +50,10 @@
           padding: 0.25em 0.65em 0.5em;
           text-decoration: none;
           transition: 0.25s all ease;
-          font-size: 1.25em;
           font-weight: 800;
           border: none;
+          cursor: pointer;
+          font-size: 1em;
         }
 
         .btn:hover, .btn:focus {
@@ -72,6 +80,7 @@
         h1 {
           font-size: 3em;
           text-transform: capitalize;
+          width: 100%;
         }
 
         .divider {
@@ -118,15 +127,14 @@
 
         li {
           position: relative; 
-          margin-bottom: 2em;         
+          margin-bottom: 2em;  
         }
 
         li p { 
-          display: inline-block;
           width: 80%;
           margin-left: 10%;
           margin-top: 0; 
-          line-height: 1.5em; 
+          line-height: 1.5em;       
         }
 
         .heading-underline {
@@ -144,4 +152,47 @@
             color: white;
             background-color: $blue;
             padding: 0.25em;
+        }
+
+// MEDIA QUERIES
+        @media screen and (max-width: 460px) { 
+
+          h1 {
+            font-size: 1.75em;
+          }
+
+          .how-to-use {
+            left: -2em !important;
+
+            p {
+              font-size: 1.5em !important;
+            }
+          }
+
+          ol {
+            padding-inline-start: 0px;
+
+            li p {
+              margin-left: 20%;
+            }
+          }
+
+          #form-header {
+            height: 100px;
+          }
+
+          #form-header .cell p {
+            font-size: 14px !important; 
+            transform: rotate(90deg);
+          }
+        
+          #form-header .cell:first-child {
+              
+            transform: rotate(-90deg) !important;
+          }
+
+          #table .table-heading .cell {
+            width: auto !important;
+          }
+
         }

@@ -14,9 +14,17 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
   routes,
   mode: 'history' // removes the # in url
 });
+
+Vue.scores_a = Vue.prototype.scores_a = []; // inner chart
+Vue.scores_b = Vue.prototype.scores_b = []; // outer chart
+
+window.scores;
 
 new Vue({
   el: '#app',
