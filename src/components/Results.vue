@@ -20,29 +20,19 @@
         <h1>Your <span class="heading-underline">Results</span></h1>
         <div class="divider yellow"></div>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-        <div id="chart-output">
-            <p v-for="inner_item in inner">{{ inner_item }}</p>
-        </div>
+        <canvas id="myChart" width="400" height="400"></canvas>
         <div id="table">
             <div class="table-heading">
                 <div class="cell"></div>
                 <div class="cell">Score</div>
                 <div class="cell">Teacher characteristics</div>
             </div>
-            <div class="table-row">
-                <div class="cell">A</div>
-                <div class="cell">27</div>
+            <div class="table-row" v-for="answer in answers">
+                <div class="cell">{{ answer.key }}</div>
+                <div class="cell">{{ answer.value }}</div>
                 <div class="cell">
-                    <p class="bold">Teacher: Flexibility in classroom situations</p>
-                    <p>Adapting to students' needs, interests and states of mind while in class. Avoiding rigidity</p>
-                </div>
-            </div>
-            <div class="table-row">
-                <div class="cell">A</div>
-                <div class="cell">27</div>
-                <div class="cell">
-                    <p class="bold">Teacher: Flexibility in classroom situations</p>
-                    <p>Adapting to students' needs, interests and states of mind while in class. Avoiding rigidity</p>
+                    <!-- <p class="bold">Teacher: Flexibility in classroom situations</p> -->
+                    <p>{{ answer.desc }}</p>
                 </div>
             </div>
         </div>
@@ -54,7 +44,7 @@
                     <img src="src/assets/img/print-icon.svg" alt="">
                 </span>
                 <img src="src/assets/img/line.svg" alt="">
-                <span @click="showData">
+                <span @click="savePdf">
                     <img src="src/assets/img/pdf-icon.svg" alt="">
                 </span>
             </div>
@@ -64,14 +54,27 @@
 </template>
 
 <script>
+import Chart from 'chart.js';
+
     export default {
         data() {
             return { 
                 position: 'step 3',
-                inner: this.scores_a,
-                outer: this.scores_b
+                example: 'just testing',
+                userScores: this.scores_a,// temporary data - this.scores_a
+                //[1,1,0,-1,1,0,0,0,0,1,1,-1,-1,0,1,0,1,-1,1,1,0,-1,1,0,0,0,0,1,1,-1,-1,0,1,0,1,-1,0,1,0,-1,1,0,-1,-1,0,1,1,0]
+                outer: this.scores_b,
+                limit: 49, // limits to the top 3 results in the array/results from the survey
+                answers: []
             };
         },
+
+        computed: {
+            innerObj() {
+                return this.limit ? this.userScores.slice(0, this.limit) : this.userScores;
+            }
+        },
+
         methods: {
             printResults() {
                 window.print();
@@ -81,10 +84,71 @@
                 alert('Todo: save as pdf functionality');
             },
 
-            showData() {
-                console.log(`the results for inner circle are: ${this.scores_a}`);
-                console.log(`the results for outer circle are: ${this.scores_b}`);
+            calcCharacteristicScore(characteristicScore, characteristicDef, key, desc) {              
+                let scores = this.userScores;
+                characteristicScore = [];
+                scores.map((a, i) => {
+                    let x = a * characteristicDef[i];
+                    if(x > 0) {
+                        characteristicScore.push(x);
+                    }
+                    parseFloat(characteristicScore);
+                });
+                
+                this.answers.push({key: key, value: characteristicScore.reduce((a,b) => a + b, 0).toFixed(3), desc: desc});
+            },
+
+            renderGraph() {
+                let context = document.querySelector('#myChart').getContext('2d');
+                let answers = this.answers;
+                const dataInner = [];
+                const labelsInner = [];
+
+                answers.forEach(function(item) {
+                    labelsInner.push(item.key); // data
+                    dataInner.push(item.value); // values
+                });
+                
+                new Chart(context, {
+                    type: 'radar',
+                    data: {
+                        labels: labelsInner,
+                        datasets: [{
+                            label: 'Inner scores',
+                            data: dataInner,
+                            backgroundColor: 'rgba(255, 196, 0, 0.2)',
+                            borderColor: 'rgba(255, 196, 0, 0.6)'
+                        }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
             }
+        },
+        
+        mounted: function() {
+            this.calcCharacteristicScore(this.characteristicAScore, this.charA, 'A', 'Teacher: Flexibility in classroom situations');
+            this.calcCharacteristicScore(this.characteristicBScore, this.charB, 'B', 'Teacher: Flexibility in administration');
+            this.calcCharacteristicScore(this.characteristicCScore, this.charC, 'C', 'Teacher: Flexibility in planning');
+            this.calcCharacteristicScore(this.characteristicDScore, this.charD, 'D', 'Teacher: Societal awareness');
+            this.calcCharacteristicScore(this.characteristicEScore, this.charE, 'E', 'Teacher: Creativity in preparation');
+            this.calcCharacteristicScore(this.characteristicFScore, this.charF, 'F', 'Teacher: Sharing responsibility');
+            this.calcCharacteristicScore(this.characteristicGScore, this.charG, 'G', 'Teacher: Having high expectations');
+            this.calcCharacteristicScore(this.characteristicHScore, this.charH, 'H', 'Teacher: Building relation with students');
+            this.calcCharacteristicScore(this.characteristicIScore, this.charI, 'I', 'Personal: Willing to show personality');
+            this.calcCharacteristicScore(this.characteristicJScore, this.charJ, 'J', 'Personal: Broad interest');
+            this.calcCharacteristicScore(this.characteristicKScore, this.charK, 'K', 'Society: Critical reflection');
+            this.calcCharacteristicScore(this.characteristicLScore, this.charL, 'L', 'Society: Real-life connection');
+            this.calcCharacteristicScore(this.characteristicMScore, this.charM, 'M', 'Society: Involvement in program');
+            this.renderGraph();
         }
     }
 </script>

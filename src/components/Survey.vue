@@ -26,20 +26,33 @@
                 <span class="question-id">{{ question.id }}.</span> 
                 <p>{{ question.question }}</p>
                 <div class="input-wrapper">
-                    <input type="radio" 
+                    <input 
+                        type="radio" 
                         v-bind:name="question.id" 
                         class="checkmark-custom" 
-                        value="a" 
+                        value="-1" 
                         v-model="question.score"
                     >
                     <label v-bind:for="question.id" class="checkmark-custom-label"></label>
                 </div>
                 <div class="input-wrapper">
-                    <input type="radio" v-bind:name="question.id" class="checkmark-custom"  value="b" v-model="question.score">
+                    <input 
+                        type="radio" 
+                        v-bind:name="question.id" 
+                        class="checkmark-custom"  
+                        value="0" 
+                        v-model="question.score"
+                    >
                     <label v-bind:for="question.id" class="checkmark-custom-label"></label>
                 </div>
                 <div class="input-wrapper">
-                    <input type="radio" v-bind:name="question.id" class="checkmark-custom"  value="c" v-model="question.score">
+                    <input 
+                        type="radio" 
+                        v-bind:name="question.id" 
+                        class="checkmark-custom"  
+                        value="1" 
+                        v-model="question.score"
+                    >
                     <label v-bind:for="question.id" class="checkmark-custom-label"></label>
                 </div>
             </div>
@@ -61,7 +74,7 @@
             return { 
                 position: 'step 2', 
                 questions: questions,
-                score: ''
+                score: []
                 }
         },
 
@@ -72,7 +85,6 @@
                     if(inputs[i].checked) {
                         this.scores_a.push(inputs[i].value);
                         this.scores_b.push(inputs[i].value);
-                        //console.log(`Question ${inputs[i].name} - Checked, has a value of ${inputs[i].value}`);
                     }
                 }
 
