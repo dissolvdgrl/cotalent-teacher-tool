@@ -52,7 +52,4 @@ new Vue({
   render: h => h(App)
 });
 
-
-// https://stackoverflow.com/questions/7667958/clearing-localstorage-in-javascript
-// https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API
 // https://github.com/MrRio/jsPDF

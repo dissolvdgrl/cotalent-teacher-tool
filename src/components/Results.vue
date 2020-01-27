@@ -23,19 +23,31 @@
         <canvas id="myChart" width="400" height="400"></canvas>
         <div id="table">
             <div class="table-heading">
-                <div class="cell"></div>
                 <div class="cell">Score</div>
-                <div class="cell">Teacher characteristics</div>
+                <div class="cell">Top 3 teacher characteristics</div>
             </div>
-            <div class="table-row" v-for="answer in answers">
-                <div class="cell">{{ answer.key }}</div>
+            <div class="table-row" v-for="answer in answers.slice(0,3)">
                 <div class="cell">{{ answer.value }}</div>
                 <div class="cell">
-                    <!-- <p class="bold">Teacher: Flexibility in classroom situations</p> -->
-                    <p>{{ answer.desc }}</p>
+                    <p class="bold">{{ answer.desc }}</p>
+                    <p>{{ answer.text }}</p>
                 </div>
             </div>
         </div>
+
+        <!-- <div id="table-two">
+            <div class="table-heading">
+                <div class="cell">Score</div>
+                <div class="cell">Top 3 characteristics that has potential for development</div>
+            </div>
+            <div class="table-row" v-for="answer in answers.slice(0,3)">
+                <div class="cell">{{ answer.value }}</div>
+                <div class="cell">
+                    <p class="bold">{{ answer.desc }}</p>
+                    <p>{{ answer.text }}</p>
+                </div>
+            </div>
+        </div> -->
 
         <div class="page-end-container">
             <div class="left-border yellow"></div>
@@ -61,18 +73,11 @@ import Chart from 'chart.js';
             return { 
                 position: 'step 3',
                 example: 'just testing',
-                userScores: this.scores_a,// temporary data - this.scores_a
-                //[1,1,0,-1,1,0,0,0,0,1,1,-1,-1,0,1,0,1,-1,1,1,0,-1,1,0,0,0,0,1,1,-1,-1,0,1,0,1,-1,0,1,0,-1,1,0,-1,-1,0,1,1,0]
-                outer: this.scores_b,
-                limit: 49, // limits to the top 3 results in the array/results from the survey
-                answers: []
+                userScores: this.scores_a,
+                outerScores: this.scores_b,
+                answers: [],
+                answersOuter: []
             };
-        },
-
-        computed: {
-            innerObj() {
-                return this.limit ? this.userScores.slice(0, this.limit) : this.userScores;
-            }
         },
 
         methods: {
@@ -84,7 +89,7 @@ import Chart from 'chart.js';
                 alert('Todo: save as pdf functionality');
             },
 
-            calcCharacteristicScore(characteristicScore, characteristicDef, key, desc) {              
+            calcCharacteristicScore(characteristicScore, characteristicDef, key, desc, text) {              
                 let scores = this.userScores;
                 characteristicScore = [];
                 scores.map((a, i) => {
@@ -95,7 +100,21 @@ import Chart from 'chart.js';
                     parseFloat(characteristicScore);
                 });
                 
-                this.answers.push({key: key, value: characteristicScore.reduce((a,b) => a + b, 0).toFixed(3), desc: desc});
+                this.answers.push({key: key, value: characteristicScore.reduce((a,b) => a + b, 0).toFixed(3), desc: desc, text: text});
+            },
+
+            calcOuterScore() {
+                
+                let newArr = [];
+
+                this.outerScores.map((a, i) => {
+                    if(a == 0) {
+                        a++;
+                        console.log(typeof a);
+                    }
+                    parseFloat([i]);
+                    newArr.push([i]);
+                });
             },
 
             renderGraph() {
@@ -135,20 +154,21 @@ import Chart from 'chart.js';
         },
         
         mounted: function() {
-            this.calcCharacteristicScore(this.characteristicAScore, this.charA, 'A', 'Teacher: Flexibility in classroom situations');
-            this.calcCharacteristicScore(this.characteristicBScore, this.charB, 'B', 'Teacher: Flexibility in administration');
-            this.calcCharacteristicScore(this.characteristicCScore, this.charC, 'C', 'Teacher: Flexibility in planning');
-            this.calcCharacteristicScore(this.characteristicDScore, this.charD, 'D', 'Teacher: Societal awareness');
-            this.calcCharacteristicScore(this.characteristicEScore, this.charE, 'E', 'Teacher: Creativity in preparation');
-            this.calcCharacteristicScore(this.characteristicFScore, this.charF, 'F', 'Teacher: Sharing responsibility');
-            this.calcCharacteristicScore(this.characteristicGScore, this.charG, 'G', 'Teacher: Having high expectations');
-            this.calcCharacteristicScore(this.characteristicHScore, this.charH, 'H', 'Teacher: Building relation with students');
-            this.calcCharacteristicScore(this.characteristicIScore, this.charI, 'I', 'Personal: Willing to show personality');
-            this.calcCharacteristicScore(this.characteristicJScore, this.charJ, 'J', 'Personal: Broad interest');
-            this.calcCharacteristicScore(this.characteristicKScore, this.charK, 'K', 'Society: Critical reflection');
-            this.calcCharacteristicScore(this.characteristicLScore, this.charL, 'L', 'Society: Real-life connection');
-            this.calcCharacteristicScore(this.characteristicMScore, this.charM, 'M', 'Society: Involvement in program');
+            this.calcCharacteristicScore(this.characteristicAScore, this.charA, 'A', 'Teacher: Flexibility in classroom situations', 'Adapting to students’ needs, interests and states of mind, while in class. Avoiding rigidity.');
+            this.calcCharacteristicScore(this.characteristicBScore, this.charB, 'B', 'Teacher: Flexibility in administration', 'Adjusting administration processes to deal with the diverse needs and circumstances of students.');
+            this.calcCharacteristicScore(this.characteristicCScore, this.charC, 'C', 'Teacher: Flexibility in planning', 'Adapting the depth, volume and pace of educational activities to students’ needs; if needed, initial planning is adjusted during educational activities including the form of deliverables.');
+            this.calcCharacteristicScore(this.characteristicDScore, this.charD, 'D', 'Teacher: Societal awareness', 'Creating awareness of others’ perspectives and encouraging students to develop a deep understanding of their personal role in society.');
+            this.calcCharacteristicScore(this.characteristicEScore, this.charE, 'E', 'Teacher: Creativity in preparation', 'Choosing didactics based on context, goal and topic and the diversity of students, avoiding choices made by habits.');
+            this.calcCharacteristicScore(this.characteristicFScore, this.charF, 'F', 'Teacher: Sharing responsibility', 'Inviting students to take initiative and contribute their talents. Relying on students’ qualities to find valid ways to reach teaching goals.');
+            this.calcCharacteristicScore(this.characteristicGScore, this.charG, 'G', 'Teacher: Having high expectations', 'Asking full commitment from students and expecting them to actively look for connections with previous learned topics and for ways to exceed their own expectations. Helping them to trust in their abilities and guide them to a higher level than they maybe thought was possible.');
+            this.calcCharacteristicScore(this.characteristicHScore, this.charH, 'H', 'Teacher: Building relation with students', 'Being an attentive listener and providing time when students are in need of personal exchange, even when the students don’t necessarily indicate this explicitly themselves.');
+            this.calcCharacteristicScore(this.characteristicIScore, this.charI, 'I', 'Personal: Willing to show personality', 'Opening up to students by showing a context-appropriate level of emotions and vulnerability, mentioning examples from his/her own life.');
+            this.calcCharacteristicScore(this.characteristicJScore, this.charJ, 'J', 'Personal: Broad interest', 'Being open-minded to new knowledge areas and societal challenges, in personal and professional domains.');
+            this.calcCharacteristicScore(this.characteristicKScore, this.charK, 'K', 'Society: Critical reflection', 'Encouraging creative and critical thinking to analyze and discuss different viewpoints towards societal developments and students’ potential to address those.');
+            this.calcCharacteristicScore(this.characteristicLScore, this.charL, 'L', 'Society: Real-life connection', 'Applying current topics and real-life examples, taking into account the different stakeholders’ involved.');
+            this.calcCharacteristicScore(this.characteristicMScore, this.charM, 'M', 'Society: Involvement in program', 'Creating a community of practice by involving colleagues from other disciplines and external professionals in the program.');
             this.renderGraph();
+            this.calcOuterScore();
         }
     }
 </script>
@@ -204,7 +224,7 @@ import Chart from 'chart.js';
         margin: 4em 0;
     }
 
-    #table {
+    #table, #table-two {
         width: 100%;
         display: flex;
         flex-direction: column;

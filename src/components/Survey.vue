@@ -87,10 +87,6 @@
                         this.scores_b.push(inputs[i].value);
                     }
                 }
-
-                console.log(this.scores_a);
-                console.log(this.scores_b);
-                alert('submitting...');
                 this.$router.push("/results");
             }
         }
