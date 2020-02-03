@@ -77,6 +77,9 @@ import Chart from 'chart.js';
                 outerScores: this.scores_b,
                 answers: [],
                 answersOuter: []
+
+                //userScores: ["-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1","0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1"],
+                //outerScores: ["-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1","0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1"],
             };
         },
 
@@ -103,29 +106,46 @@ import Chart from 'chart.js';
                 this.answers.push({key: key, value: characteristicScore.reduce((a,b) => a + b, 0).toFixed(3), desc: desc, text: text});
             },
 
-            calcOuterScore() {
+            calcOuterScore(characteristicScore, characteristicDef, key, desc, text) {
+                let outerScores = this.outerScores;
                 
-                let newArr = [];
+                let characteristicScoreOuter = [];
+                let characteristicScoreOuterOutput = [];
 
-                this.outerScores.map((a, i) => {
-                    if(a == 0) {
-                        a++;
-                        console.log(typeof a);
-                    }
-                    parseFloat([i]);
-                    newArr.push([i]);
+                outerScores = outerScores.map(Number);
+                
+                characteristicScoreOuter = outerScores.map(i => {
+                    i == 0 ? i++ : i;
+                    return i;
                 });
+
+                characteristicScoreOuter.map((a, i) => {
+                    let x = a * characteristicDef[i];
+                    if(x > 0) {
+                        characteristicScoreOuterOutput.push(x);
+                    }
+                });
+
+                this.answersOuter.push({key: key, value: characteristicScoreOuterOutput.reduce((a,b) => a + b, 0).toFixed(3), desc: desc, text: text});
             },
 
             renderGraph() {
                 let context = document.querySelector('#myChart').getContext('2d');
                 let answers = this.answers;
+                let answersOuter = this.answersOuter;
                 const dataInner = [];
                 const labelsInner = [];
+                const dataOuter = [];
+                const labelsOuter = [];
 
                 answers.forEach(function(item) {
                     labelsInner.push(item.key); // data
                     dataInner.push(item.value); // values
+                });
+
+                answersOuter.forEach(function(item) {
+                    labelsOuter.push(item.key); // data
+                    dataOuter.push(item.value); // values
                 });
                 
                 new Chart(context, {
@@ -135,10 +155,15 @@ import Chart from 'chart.js';
                         datasets: [{
                             label: 'Inner scores',
                             data: dataInner,
+                            backgroundColor: 'rgba(0, 48, 151, 0.2)',
+                            borderColor: 'rgba(0, 48, 151, 0.6)'
+                        },
+                        {
+                            label: 'Outer scores',
+                            data: dataOuter,
                             backgroundColor: 'rgba(255, 196, 0, 0.2)',
                             borderColor: 'rgba(255, 196, 0, 0.6)'
-                        }
-                        ]
+                        }]
                     },
                     options: {
                         scales: {
@@ -167,8 +192,23 @@ import Chart from 'chart.js';
             this.calcCharacteristicScore(this.characteristicKScore, this.charK, 'K', 'Society: Critical reflection', 'Encouraging creative and critical thinking to analyze and discuss different viewpoints towards societal developments and students’ potential to address those.');
             this.calcCharacteristicScore(this.characteristicLScore, this.charL, 'L', 'Society: Real-life connection', 'Applying current topics and real-life examples, taking into account the different stakeholders’ involved.');
             this.calcCharacteristicScore(this.characteristicMScore, this.charM, 'M', 'Society: Involvement in program', 'Creating a community of practice by involving colleagues from other disciplines and external professionals in the program.');
+
+            // Calculate outer scores
+            this.calcOuterScore(this.characteristicAScore, this.charA, 'A', 'Teacher: Flexibility in classroom situations', 'Adapting to students’ needs, interests and states of mind, while in class. Avoiding rigidity.');
+            this.calcOuterScore(this.characteristicBScore, this.charB, 'B', 'Teacher: Flexibility in administration', 'Adjusting administration processes to deal with the diverse needs and circumstances of students.');
+            this.calcOuterScore(this.characteristicCScore, this.charC, 'C', 'Teacher: Flexibility in planning', 'Adapting the depth, volume and pace of educational activities to students’ needs; if needed, initial planning is adjusted during educational activities including the form of deliverables.');
+            this.calcOuterScore(this.characteristicDScore, this.charD, 'D', 'Teacher: Societal awareness', 'Creating awareness of others’ perspectives and encouraging students to develop a deep understanding of their personal role in society.');
+            this.calcOuterScore(this.characteristicEScore, this.charE, 'E', 'Teacher: Creativity in preparation', 'Choosing didactics based on context, goal and topic and the diversity of students, avoiding choices made by habits.');
+            this.calcOuterScore(this.characteristicFScore, this.charF, 'F', 'Teacher: Sharing responsibility', 'Inviting students to take initiative and contribute their talents. Relying on students’ qualities to find valid ways to reach teaching goals.');
+            this.calcOuterScore(this.characteristicGScore, this.charG, 'G', 'Teacher: Having high expectations', 'Asking full commitment from students and expecting them to actively look for connections with previous learned topics and for ways to exceed their own expectations. Helping them to trust in their abilities and guide them to a higher level than they maybe thought was possible.');
+            this.calcOuterScore(this.characteristicHScore, this.charH, 'H', 'Teacher: Building relation with students', 'Being an attentive listener and providing time when students are in need of personal exchange, even when the students don’t necessarily indicate this explicitly themselves.');
+            this.calcOuterScore(this.characteristicIScore, this.charI, 'I', 'Personal: Willing to show personality', 'Opening up to students by showing a context-appropriate level of emotions and vulnerability, mentioning examples from his/her own life.');
+            this.calcOuterScore(this.characteristicJScore, this.charJ, 'J', 'Personal: Broad interest', 'Being open-minded to new knowledge areas and societal challenges, in personal and professional domains.');
+            this.calcOuterScore(this.characteristicKScore, this.charK, 'K', 'Society: Critical reflection', 'Encouraging creative and critical thinking to analyze and discuss different viewpoints towards societal developments and students’ potential to address those.');
+            this.calcOuterScore(this.characteristicLScore, this.charL, 'L', 'Society: Real-life connection', 'Applying current topics and real-life examples, taking into account the different stakeholders’ involved.');
+            this.calcOuterScore(this.characteristicMScore, this.charM, 'M', 'Society: Involvement in program', 'Creating a community of practice by involving colleagues from other disciplines and external professionals in the program.');
+
             this.renderGraph();
-            this.calcOuterScore();
         }
     }
 </script>
