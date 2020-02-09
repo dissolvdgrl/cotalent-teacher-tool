@@ -181,6 +181,13 @@ import Chart from 'chart.js';
             },
 
             savePdf() {    
+                function addScript(url) {
+                    let script = document.createElement('script');
+                    script.type = 'application/javascript';
+                    script.src = url;
+                    document.head.appendChild(script);
+                }
+                addScript('https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js');
                 
                 const content = document.querySelector('#content-pdf');
                 content.classList.add('pdf-content');
