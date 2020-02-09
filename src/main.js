@@ -52,4 +52,4 @@ new Vue({
   render: h => h(App)
 });
 
-// https://github.com/MrRio/jsPDF
+// https://github.com/eKoopmans/html2pdf.js

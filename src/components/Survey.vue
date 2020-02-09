@@ -87,7 +87,12 @@
                         this.scores_b.push(inputs[i].value);
                     }
                 }
-                this.$router.push("/results");
+                
+                if(this.scores_a.length < 49) {
+                    alert('Please make sure that all the questions have been answered before you proceed.');
+                } else {
+                    this.$router.push("/results");
+                }
             }
         }
     }

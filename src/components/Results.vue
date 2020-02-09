@@ -17,50 +17,49 @@
                 <span>Save as PDF</span>
             </button>
         </div>
-        <h1>Your <span class="heading-underline">Results</span></h1>
-        <div class="divider yellow"></div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-        <canvas id="myChart" width="400" height="400"></canvas>
-        <div id="table">
-            <div class="table-heading">
-                <div class="cell">Score</div>
-                <div class="cell">Top 3 teacher characteristics</div>
-            </div>
-            <div class="table-row" v-for="answer in answers.slice(0,3)">
-                <div class="cell">{{ answer.value }}</div>
-                <div class="cell">
-                    <p class="bold">{{ answer.desc }}</p>
-                    <p>{{ answer.text }}</p>
+
+        <div id="content-pdf">
+            <h1>Your <span class="heading-underline">Results</span></h1>
+            <div class="divider yellow"></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+            <canvas id="myChart" width="400" height="400"></canvas>
+            <div id="table">
+                <div class="table-heading">
+                    <div class="cell">Top 3 teacher characteristics</div>
+                </div>
+                <div class="table-row" v-for="answer in answers.slice(0,3)">
+                    <div class="cell">
+                        <p class="bold top3-desc">{{ answer.desc }}</p>
+                        <p class="top3-text">{{ answer.text }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- <div id="table-two">
-            <div class="table-heading">
-                <div class="cell">Score</div>
-                <div class="cell">Top 3 characteristics that has potential for development</div>
-            </div>
-            <div class="table-row" v-for="answer in answers.slice(0,3)">
-                <div class="cell">{{ answer.value }}</div>
-                <div class="cell">
-                    <p class="bold">{{ answer.desc }}</p>
-                    <p>{{ answer.text }}</p>
+            <div id="table-two">
+                <div class="table-heading">
+                    <div class="cell">Top 3 characteristics that has potential for development</div>
+                </div>
+                <div class="table-row" v-for="answerOuter in answersOuter.slice(0,3)">
+                    <div class="cell">
+                        <p class="bold bottom3-desc">{{ answerOuter.desc }}</p>
+                        <p class="bottom3-text">{{ answerOuter.text }}</p>
+                    </div>
                 </div>
             </div>
-        </div> -->
 
-        <div class="page-end-container">
-            <div class="left-border yellow"></div>
-            <div class="page-end-controls">
-                <span @click="printResults">
-                    <img src="src/assets/img/print-icon.svg" alt="">
-                </span>
-                <img src="src/assets/img/line.svg" alt="">
-                <span @click="savePdf">
-                    <img src="src/assets/img/pdf-icon.svg" alt="">
-                </span>
+            <div class="page-end-container">
+                <div class="left-border yellow"></div>
+                <div class="page-end-controls">
+                    <span @click="printResults">
+                        <img src="src/assets/img/print-icon.svg" alt="">
+                    </span>
+                    <img src="src/assets/img/line.svg" alt="">
+                    <span @click="savePdf">
+                        <img src="src/assets/img/pdf-icon.svg" alt="">
+                    </span>
+                </div>
+                <div class="right-border yellow"></div>
             </div>
-            <div class="right-border yellow"></div>
         </div>
     </div>
 </template>
@@ -88,10 +87,6 @@ import Chart from 'chart.js';
                 window.print();
             },
 
-            savePdf() {
-                alert('Todo: save as pdf functionality');
-            },
-
             calcCharacteristicScore(characteristicScore, characteristicDef, key, desc, text) {              
                 let scores = this.userScores;
                 characteristicScore = [];
@@ -104,6 +99,10 @@ import Chart from 'chart.js';
                 });
                 
                 this.answers.push({key: key, value: characteristicScore.reduce((a,b) => a + b, 0).toFixed(3), desc: desc, text: text});
+
+                this.answers.sort(function(a,b) {
+                    return b - a;
+                });
             },
 
             calcOuterScore(characteristicScore, characteristicDef, key, desc, text) {
@@ -127,6 +126,10 @@ import Chart from 'chart.js';
                 });
 
                 this.answersOuter.push({key: key, value: characteristicScoreOuterOutput.reduce((a,b) => a + b, 0).toFixed(3), desc: desc, text: text});
+
+                this.answers.sort(function(a,b) {
+                    return a - b;
+                });
             },
 
             renderGraph() {
@@ -174,7 +177,23 @@ import Chart from 'chart.js';
                             }]
                         }
                     }
-                });
+                });                
+            },
+
+            savePdf() {    
+                
+                const content = document.querySelector('#content-pdf');
+                content.classList.add('pdf-content');
+                document.getElementById('myChart').setAttribute('style', 'width:570px');
+                document.getElementById('myChart').setAttribute('style', 'height:570px');
+                function clearPdfSettings() {
+                    content.classList.remove('pdf-content');
+                    document.getElementById('myChart').setAttribute('style', 'width:1131px');
+                    document.getElementById('myChart').setAttribute('style', 'height:1131px'); 
+                };
+
+                html2pdf(content);    
+                setTimeout (clearPdfSettings, 2000);
             }
         },
         
@@ -300,12 +319,8 @@ import Chart from 'chart.js';
                 border-right: 1px solid #CBCBCB;
             }
 
-            .cell:first-child {
-                font-weight: 800;
-            }
-
             .cell:last-child {
-                width: 70%;
+                width: 100%;
                 border-right: none;
                 p:first-child {
                     font-weight: 800;
@@ -314,6 +329,14 @@ import Chart from 'chart.js';
                     margin: 0;
                 }
             }
+        }
+    }
+
+    #table-two .table-heading {
+        background-color: $yellow;
+
+        .cell {
+            color: $blue;
         }
     }
 
@@ -333,5 +356,17 @@ import Chart from 'chart.js';
             background-color: $yellow;
             cursor: pointer;
         }
+    }
+
+    #content-pdf {
+        width: 100%;
+    }
+
+    .pdf-content {
+        max-width: 595px;
+
+        * {
+            font-size: 12px !important;
+        }        
     }
 </style>
