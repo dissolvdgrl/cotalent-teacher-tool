@@ -37,7 +37,7 @@
 
             <div id="table-two">
                 <div class="table-heading">
-                    <div class="cell">Top 3 characteristics that has potential for development</div>
+                    <div class="cell">Top 3 Characteristics that have potential for development</div>
                 </div>
                 <div class="table-row" v-for="answerOuter in answersOuter.slice(0,3)">
                     <div class="cell">
@@ -72,13 +72,12 @@ import Chart from 'chart.js';
             return { 
                 position: 'step 3',
                 example: 'just testing',
-                userScores: this.scores_a,
-                outerScores: this.scores_b,
+                //userScores: this.scores_a,
+                //outerScores: this.scores_b,
                 answers: [],
-                answersOuter: []
-
-                //userScores: ["-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1","0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1"],
-                //outerScores: ["-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1","0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1"],
+                answersOuter: [],
+                userScores: ["-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1","0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1"],
+                outerScores: ["-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1","0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1"]
             };
         },
 
@@ -142,7 +141,7 @@ import Chart from 'chart.js';
                 const labelsOuter = [];
 
                 answers.forEach(function(item) {
-                    labelsInner.push(item.key); // data
+                    labelsInner.push(item.desc); // data
                     dataInner.push(item.value); // values
                 });
 
@@ -150,7 +149,7 @@ import Chart from 'chart.js';
                     labelsOuter.push(item.key); // data
                     dataOuter.push(item.value); // values
                 });
-                
+                Chart.defaults.global.defaultFontSize = 16;
                 new Chart(context, {
                     type: 'radar',
                     data: {
@@ -195,8 +194,8 @@ import Chart from 'chart.js';
                 document.getElementById('myChart').setAttribute('style', 'height:570px');
                 function clearPdfSettings() {
                     content.classList.remove('pdf-content');
-                    document.getElementById('myChart').setAttribute('style', 'width:1131px');
-                    document.getElementById('myChart').setAttribute('style', 'height:1131px'); 
+                    document.getElementById('myChart').setAttribute('style', 'width:960px');
+                    document.getElementById('myChart').setAttribute('style', 'height:960px'); 
                 };
 
                 html2pdf(content);    
@@ -284,6 +283,13 @@ import Chart from 'chart.js';
             cursor: pointer;
             background-color: $yellow;
         }
+    }
+
+    #myChart {
+        width: 100%;
+        max-width: 960px;
+        height: 100%;
+        max-height: 960px;
     }
 
     #chart-output, #table {
