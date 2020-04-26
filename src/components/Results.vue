@@ -21,16 +21,20 @@
         <div id="content-pdf">
             <h1>Your <span class="heading-underline">Results</span></h1>
             <div class="divider yellow"></div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+            <p>Your strategy scores were translated into teacher characteristics. Strategies are practical, are things you do, while characteristics are abstract descriptions of teacher behaviour. Most people show strategies which relate to different characteristics.</p>
+            <p>Below you see your scores for the thirteen characteristics and your top-3’s. Definitions of the characteristics can be found here.</p>
+            <p>The first top-3 shows how your dominant behaviour matches the teacher characteristics. Your natural preference is to use strategies linked to these characteristics. The second top-3 shows which teacher characteristics are interesting to explore, as you seem to have potential for these.</p>
+            <p>For all characteristics classroom examples are provided. You can use these to deepen the characteristics you use naturally (shown in your first top-3), or to try new characteristics.</p>
             <canvas id="myChart" width="400" height="400"></canvas>
             <div id="table">
                 <div class="table-heading">
                     <div class="cell">Top 3 teacher characteristics</div>
                 </div>
-                <div class="table-row" v-for="answer in answers.slice(0,3)">
+                <div class="table-row" v-for="item in top3.slice(0,3)">
                     <div class="cell">
-                        <p class="bold top3-desc">{{ answer.desc }}</p>
-                        <p class="top3-text">{{ answer.text }}</p>
+                        <p class="bold top3-desc">{{ item.key }}: {{ item.desc }}</p>
+                        <p class="top3-text">{{ item.text }}</p>
+                        <a href="#" class="examples-link">View examples</a>
                     </div>
                 </div>
             </div>
@@ -39,10 +43,11 @@
                 <div class="table-heading">
                     <div class="cell">Top 3 Characteristics that have potential for development</div>
                 </div>
-                <div class="table-row" v-for="answerOuter in answersOuter.slice(0,3)">
+                <div class="table-row" v-for="item in bottom3.slice(0,3)">
                     <div class="cell">
-                        <p class="bold bottom3-desc">{{ answerOuter.desc }}</p>
-                        <p class="bottom3-text">{{ answerOuter.text }}</p>
+                        <p class="bold bottom3-desc">{{ item.key }}: {{ item.desc }}</p>
+                        <p class="bottom3-text">{{ item.text }}</p>
+                        <a href="#" class="examples-link">View examples</a>
                     </div>
                 </div>
             </div>
@@ -72,12 +77,14 @@ import Chart from 'chart.js';
             return { 
                 position: 'step 3',
                 example: 'just testing',
-                userScores: this.scores_a,
-                outerScores: this.scores_b,
+                //userScores: this.scores_a,
+                //outerScores: this.scores_b,
                 answers: [],
                 answersOuter: [],
-                //userScores: ["-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1","0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1"],
-                //outerScores: ["-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1","0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1"]
+                top3: [],
+                bottom3: [],
+                userScores: ["-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1","0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "0", "-1"],
+                outerScores: ["1", "-1", "0", "-1", "0", "0", "-1", "0", "1", "1", "0", "-1", "1", "-1", "0","1", "-1", "1", "0", "1", "1", "1", "0", "-1", "0", "1", "0", "-1", "0", "1", "-1", "1", "0", "1", "-1", "1", "1", "1", "-1", "1", "0", "-1", "-1", "1", "0", "1", "-1", "1", "0"]
             };
         },
 
@@ -97,11 +104,7 @@ import Chart from 'chart.js';
                     parseFloat(characteristicScore);
                 });
                 
-                this.answers.push({key: key, value: characteristicScore.reduce((a,b) => a + b, 0).toFixed(3), desc: desc, text: text});
-
-                this.answers.sort(function(a,b) {
-                    return b - a;
-                });
+                this.answers.push({key: key, value: characteristicScore.reduce((a,b) => a + b, 0), desc: desc, text: text});
             },
 
             calcOuterScore(characteristicScore, characteristicDef, key, desc, text) {
@@ -125,10 +128,6 @@ import Chart from 'chart.js';
                 });
 
                 this.answersOuter.push({key: key, value: characteristicScoreOuterOutput.reduce((a,b) => a + b, 0).toFixed(3), desc: desc, text: text});
-
-                this.answers.sort(function(a,b) {
-                    return a - b;
-                });
             },
 
             renderGraph() {
@@ -149,19 +148,20 @@ import Chart from 'chart.js';
                     labelsOuter.push(item.key); // data
                     dataOuter.push(item.value); // values
                 });
+
                 Chart.defaults.global.defaultFontSize = 16;
                 new Chart(context, {
                     type: 'radar',
                     data: {
                         labels: labelsInner,
                         datasets: [{
-                            label: 'Inner scores',
+                            label: 'Your dominant scores',
                             data: dataInner,
                             backgroundColor: 'rgba(0, 48, 151, 0.2)',
                             borderColor: 'rgba(0, 48, 151, 0.6)'
                         },
                         {
-                            label: 'Outer scores',
+                            label: 'Your potential scores',
                             data: dataOuter,
                             backgroundColor: 'rgba(255, 196, 0, 0.2)',
                             borderColor: 'rgba(255, 196, 0, 0.6)'
@@ -176,7 +176,7 @@ import Chart from 'chart.js';
                             }]
                         }
                     }
-                });                
+                });   
             },
 
             savePdf() {    
@@ -200,6 +200,20 @@ import Chart from 'chart.js';
 
                 html2pdf(content);    
                 setTimeout (clearPdfSettings, 2000);
+            },
+
+            renderTop3() {
+                // sort inner scores from highest to lowest
+                this.top3 = this.answers.slice(0);
+                this.top3.sort((a, b) => { 
+                    return b.value - a.value
+                }); 
+
+                this.bottom3 = this.answersOuter.slice(0);
+                
+                this.bottom3.sort((a, b) => {
+                    return a.value - b.value
+                });
             }
         },
         
@@ -234,6 +248,7 @@ import Chart from 'chart.js';
             this.calcOuterScore(this.characteristicMScore, this.charM, 'M', 'Society: Involvement in program', 'Creating a community of practice by involving colleagues from other disciplines and external professionals in the program.');
 
             this.renderGraph();
+            this.renderTop3();
         }
     }
 </script>

@@ -154,6 +154,28 @@
             padding: 0.25em;
         }
 
+        .examples-link {
+            display: inline-block;
+            font-weight: 800;
+            color: $gray;
+            font-size: 0.75em;
+            font-style: italic;
+            text-decoration: none;
+            margin: 1rem 0;
+        }
+
+        .examples-link::after {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            content: url('/src/assets/img/external.svg');
+            padding-left: 0.5em;
+        }
+
+        .examples-link:hover, .examples-link:hover::after {
+            opacity: 0.75;
+        }
+
 // MEDIA QUERIES
         @media screen and (max-width: 460px) { 
 

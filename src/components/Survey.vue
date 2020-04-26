@@ -5,7 +5,7 @@
         </div>
         <h1>Teacher Talent Tool: <span class="heading-underline">Questions</span></h1>
         <div class="divider yellow"></div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+        <p>After you thought over your experiences with a familiar class or your teaching over the past two years, please score yourself on the listed strategies below. Do not use the list to define the ‘ideal’ teacher, but focus on scoring yourself. Your personal characteristics profile can then provide you with inspiration.</p>
 
         <form action="" id="questions-form">
             <div id="form-header">
@@ -88,11 +88,12 @@
                     }
                 }
                 
-                if(this.scores_a.length < 49) {
+                /* if(this.scores_a.length < 49) {
                     alert('Please make sure that all the questions have been answered before you proceed.');
                 } else {
                     this.$router.push("/results");
-                }
+                } */
+                this.$router.push("/results");
             }
         }
     }
