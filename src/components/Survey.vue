@@ -88,12 +88,11 @@
                     }
                 }
                 
-                /* if(this.scores_a.length < 49) {
+                if(this.scores_a.length < 49) {
                     alert('Please make sure that all the questions have been answered before you proceed.');
                 } else {
                     this.$router.push("/results");
-                } */
-                this.$router.push("/results");
+                }
             }
         }
     }
