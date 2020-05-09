@@ -87,6 +87,9 @@
                         this.scores_b.push(inputs[i].value);
                     }
                 }
+
+                console.log(this.scores_a);
+                console.log(this.scores_b);
                 
                 if(this.scores_a.length < 49) {
                     alert('Please make sure that all the questions have been answered before you proceed.');
