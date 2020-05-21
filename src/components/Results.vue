@@ -32,7 +32,7 @@
                 </div>
                 <div class="table-row" v-for="item in top3.slice(0,3)">
                     <div class="cell">
-                        <p class="bold top3-desc">{{ item.key }}: {{ item.desc }}</p>
+                        <p class="bold top3-desc">{{ item.value }}: {{ item.desc }}</p>
                         <p class="top3-text">{{ item.text }}</p>
                         <details class="examples">
                             <summary>View examples</summary>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="table-row" v-for="item in bottom3.slice(0,3)">
                     <div class="cell">
-                        <p class="bold bottom3-desc">{{ item.key }}: {{ item.desc }}</p>
+                        <p class="bold bottom3-desc">{{ item.value }}: {{ item.desc }}</p>
                         <p class="bottom3-text">{{ item.text }}</p>
                         <details class="examples">
                             <summary>View examples</summary>
@@ -91,7 +91,6 @@
         data() {
             return { 
                 position: 'step 3',
-                example: 'just testing',
                 userScores: this.scores_a,
                 outerScores: this.scores_b,
                 answers: [],
@@ -111,6 +110,7 @@
             calcCharacteristicScore(characteristicScore, characteristicDef, key, desc, text, exp) {              
                 let scores = this.userScores;
                 characteristicScore = [];
+
                 scores.map((a, i) => {
                     let x = a * characteristicDef[i];
                     if(x > 0) {
@@ -126,8 +126,6 @@
                     text: text,
                     exp: exp
                 });
-
-                console.log(this.answers);
             },
 
             calcOuterScore(characteristicScore, characteristicDef, key, desc, text, exp) {
@@ -240,8 +238,8 @@
 
                 this.bottom3 = this.answersOuter.slice(0);
                 this.bottom3.sort((a, b) => {
-                    return b.value - a.value
-                });
+                    return a.value - b.value
+                }); 
             }
         },
         
