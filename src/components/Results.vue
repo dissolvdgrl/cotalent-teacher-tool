@@ -166,11 +166,13 @@
                 const dataOuter = [];
                 const labelsOuter = [];
 
+                // blue 
                 answers.forEach(function(item) {
                     labelsInner.push(item.desc); // data
                     dataInner.push(item.value); // values
                 });
 
+                //yellow
                 answersOuter.forEach(function(item) {
                     labelsOuter.push(item.key); // data
                     dataOuter.push(item.value); // values
