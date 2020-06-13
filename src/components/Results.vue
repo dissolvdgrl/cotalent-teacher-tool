@@ -242,7 +242,6 @@
                 for(let i = 0; i < this.answersOuter.length; i++) {
                     this.bottom3[i].value = this.answers[i].value - this.answersOuter[i].value;
                 }
-
                 this.bottom3.sort((a,b) => a.value - b.value);
             }
         },
