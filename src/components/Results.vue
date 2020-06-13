@@ -32,7 +32,7 @@
                 </div>
                 <div class="table-row" v-for="item in top3.slice(0,3)">
                     <div class="cell">
-                        <p class="bold top3-desc">{{ item.value }}: {{ item.desc }}</p>
+                        <p class="bold top3-desc">{{ item.desc }}</p>
                         <p class="top3-text">{{ item.text }}</p>
                         <details class="examples">
                             <summary>View examples</summary>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="table-row" v-for="item in bottom3.slice(0,3)">
                     <div class="cell">
-                        <p class="bold bottom3-desc">{{ item.value }}: {{ item.desc }}</p>
+                        <p class="bold bottom3-desc">{{ item.desc }}</p>
                         <p class="bottom3-text">{{ item.text }}</p>
                         <details class="examples">
                             <summary>View examples</summary>
@@ -89,7 +89,7 @@
 
     export default {
         data() {
-            return { 
+            return {
                 position: 'step 3',
                 userScores: this.scores_a,
                 outerScores: this.scores_b,
@@ -107,7 +107,7 @@
                 window.print();
             },
 
-            calcCharacteristicScore(characteristicScore, characteristicDef, key, desc, text, exp) {              
+            calcCharacteristicScore(characteristicScore, characteristicDef, key, desc, text, exp) {
                 let scores = this.userScores;
                 characteristicScore = [];
 
@@ -118,11 +118,11 @@
                     }
                     parseFloat(characteristicScore);
                 });
-                
+
                 this.answers.push({
-                    key: key, 
-                    value: characteristicScore.reduce((a,b) => a + b, 0), 
-                    desc: desc, 
+                    key: key,
+                    value: characteristicScore.reduce((a,b) => a + b, 0),
+                    desc: desc,
                     text: text,
                     exp: exp
                 });
@@ -130,12 +130,12 @@
 
             calcOuterScore(characteristicScore, characteristicDef, key, desc, text, exp) {
                 let outerScores = this.outerScores;
-                
+
                 let characteristicScoreOuter = [];
                 let characteristicScoreOuterOutput = [];
 
                 outerScores = outerScores.map(Number);
-                
+
                 characteristicScoreOuter = outerScores.map(i => {
                     i == 0 ? i++ : i;
                     return i;
@@ -149,9 +149,9 @@
                 });
 
                 this.answersOuter.push({
-                    key: key, 
-                    value: characteristicScoreOuterOutput.reduce((a,b) => a + b, 0).toFixed(3), 
-                    desc: desc, 
+                    key: key,
+                    value: characteristicScoreOuterOutput.reduce((a,b) => a + b, 0).toFixed(3),
+                    desc: desc,
                     text: text,
                     exp: exp
                 });
@@ -166,7 +166,7 @@
                 const dataOuter = [];
                 const labelsOuter = [];
 
-                // blue 
+                // blue
                 answers.forEach(function(item) {
                     labelsInner.push(item.desc); // data
                     dataInner.push(item.value); // values
@@ -205,10 +205,10 @@
                             }]
                         }
                     }
-                });   
+                });
             },
 
-            savePdf() {    
+            savePdf() {
                 function addScript(url) {
                     let script = document.createElement('script');
                     script.type = 'application/javascript';
@@ -216,7 +216,7 @@
                     document.head.appendChild(script);
                 }
                 addScript('https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js');
-                
+
                 const content = document.querySelector('#content-pdf');
                 content.classList.add('pdf-content');
                 document.getElementById('myChart').setAttribute('style', 'width:570px');
@@ -224,27 +224,29 @@
                 function clearPdfSettings() {
                     content.classList.remove('pdf-content');
                     document.getElementById('myChart').setAttribute('style', 'width:960px');
-                    document.getElementById('myChart').setAttribute('style', 'height:960px'); 
+                    document.getElementById('myChart').setAttribute('style', 'height:960px');
                 };
 
-                html2pdf(content);    
+                html2pdf(content);
                 setTimeout (clearPdfSettings, 2000);
             },
 
             renderTop3() {
                 // sort inner scores from highest to lowest
                 this.top3 = this.answers.slice(0);
-                this.top3.sort((a, b) => { 
+                this.top3.sort((a, b) => {
                     return b.value - a.value
-                }); 
+                });
 
                 this.bottom3 = this.answersOuter.slice(0);
-                this.bottom3.sort((a, b) => {
-                    return a.value - b.value
-                }); 
+                for(let i = 0; i < this.answersOuter.length; i++) {
+                    this.bottom3[i].value = this.answers[i].value - this.answersOuter[i].value;
+                }
+
+                this.bottom3.sort((a,b) => a.value - b.value);
             }
         },
-        
+
         mounted: function() {
             this.calcCharacteristicScore(this.characteristicAScore, this.charA, 'A', 'Teacher: Flexibility in classroom situations', 'Adapting to students’ needs, interests and states of mind, while in class. Avoiding rigidity.', descriptions[0].descriptions);
             this.calcCharacteristicScore(this.characteristicBScore, this.charB, 'B', 'Teacher: Flexibility in administration', 'Adjusting administration processes to deal with the diverse needs and circumstances of students.', descriptions[1].descriptions);
@@ -311,7 +313,7 @@
             padding: 0.5em 1em;
             font-size: 1em;
             font-weight: 800;
-            display: flex;           
+            display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 2em;
@@ -347,7 +349,7 @@
         .table-heading {
             background-color: $blue;
             display: flex;
-            
+
             .cell {
                 color: white;
                 text-transform: uppercase;
@@ -423,10 +425,12 @@
 
         * {
             font-size: 12px !important;
-        }        
+        }
     }
 
     .examples {
+        font-size: 0.8rem;
+        margin-top: 1rem;
         summary {
             font-weight: bold;
             font-style: italic;
